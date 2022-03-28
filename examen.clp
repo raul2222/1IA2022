@@ -3,8 +3,36 @@
 )
 
 (defrule coger-naranja
-    (robot linea $?data1 pedido $?data2 na ?na $?data3 stock $?data4 n 10 m 10 c 10 u 10 maximo 3 error no )
-    (test (>= ?tl (max ?t1 ?t2)))
+    (robot linea $?data1 pedido $?data2 na ?na $?data3 stock $?data4 n ?n $?data5 maximo ?m error ?e )
+    (test (>= ?n ?na))
     =>
-    (assert (familia lado1 $?data1 $?data2 $?data3 lado2 ?miembro1 t ?t1 ?miembro2 t ?t2 $?data4 linterna t (- ?tl (max ?t1 ?t2)) nivel (+ ?x 1)))
+    (assert (robot linea na ?na $?data1 pedido $?data3 stock $?data4 n (- ?n ?na) $?data5 maximo ?m error ?e))
+)
+(defrule coger-manzana
+    (robot linea $?data1 pedido $?data2 ma ?ma $?data3 stock $?data4 m ?m $?data5 maximo ?m error ?e )
+    (test (>= ?m ?ma))
+    =>
+    (assert (robot linea ma ?ma $?data1 pedido $?data3 stock $?data4 m (- ?m ?ma) $?data5 maximo ?m error ?e))
+)
+
+(defrule coger-uva
+    (robot linea $?data1 pedido $?data2 uv ?uv $?data3 stock $?data4 v ?v $?data5 maximo ?m error ?e )
+    (test (>= ?v ?uv))
+    =>
+    (assert (robot linea uv ?uv $?data1 pedido $?data3 stock $?data4 m (- ?v ?uv) $?data5 maximo ?m error ?e))
+)
+
+(defrule coger-uva
+    (robot linea $?data1 pedido $?data2 uv ?uv $?data3 stock $?data4 v ?v $?data5 maximo ?m error ?e )
+    (test (>= ?v ?uv))
+    =>
+    (assert (robot linea uv ?uv $?data1 pedido $?data3 stock $?data4 m (- ?v ?uv) $?data5 maximo ?m error ?e))
+)
+
+(defrule final
+    (robot linea $?data1 pedido stock $?data4 )
+    =>
+    (printout t "FIN" crlf)
+    (halt)
+
 )
